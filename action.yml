@@ -1,0 +1,61 @@
+name: Update release branch
+description: >-
+  Updates a repository's release branch to $GITHUB_SHA and tags the merge commit with the supplied
+  version.
+
+inputs:
+  version:
+    description: The version of the release
+    required: true
+  release-branch:
+    description: The name of the release branch
+    required: false
+    default: "release"
+  repository-path:
+    description: The location of the repository
+    required: false
+    default: "${{ github.workspace }}"
+  git-user-name:
+    description: The author/committer name to use for the merge commit on the release branch
+    required: false
+    # https://github.com/actions/checkout/pull/1707
+    default: "github-actions[bot]"
+  git-user-email:
+    description: >-
+      The author/committer email address to use for the merge commit on the release branch
+    required: false
+    # https://github.com/actions/checkout/pull/1707
+    default: "41898282+github-actions[bot]@users.noreply.github.com"
+
+runs:
+  using: "composite"
+  steps:
+    # https://docs.astral.sh/uv/guides/integration/github/
+    - name: Install uv
+      uses: astral-sh/setup-uv@v5
+      with:
+        version: "0.6.12"
+
+    - name: Setup Python environment
+      uses: actions/setup-python@v5
+      with:
+        python-version-file: "pyproject.toml"
+
+    - name: Install Python dependencies
+      shell: bash
+      run: |
+        cd "${{ github.action_path }}"
+        uv sync --locked --no-dev
+
+    - name: Update release branch
+      shell: bash
+      run: |
+        DEBUG=$([ -z "${RUNNER_DEBUG:-}" ] || echo "--debug")
+        cd "${{ github.action_path }}"
+        uv run update-release-branch.py $DEBUG update \
+          --repository-path '${{ inputs.repository-path }}' \
+          --git-user-name '${{ inputs.git-user-name }}' \
+          --git-user-email '${{ inputs.git-user-email }}' \
+          --release-branch '${{ inputs.release-branch }}' \
+          --version '${{ inputs.version }}' \
+          --update-to '${{ github.sha }}'

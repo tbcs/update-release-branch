@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - "**"
+    tags-ignore:
+      - "**"
+
+jobs:
+  build-test-publish:
+    name: Build, test, publish Docker image
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Initialize build environment
+        uses: ./.github/actions/init-build
+
+      - name: Run checks
+        uses: ./.github/actions/check
+
+      - name: Initialize Docker environment
+        uses: ./.github/actions/init-docker
+        with:
+          docker-hub-user: "${{ vars.DOCKER_HUB_USER }}"
+          docker-hub-pass: "${{ secrets.DOCKER_HUB_PASS }}"
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v6
+        env:
+          DOCKER_BUILD_RECORD_UPLOAD: false
+        with:
+          file: ./Dockerfile
+          load: true # incompatible with multi-platform builds
+          push: false
+          # multi-platform build disabled due to incompatibility with `load`:
+          #     docker exporter does not currently support exporting manifest lists
+          # platforms: linux/amd64,linux/arm64/v8
+          tags: |
+            ${{ vars.DOCKER_IMAGE_NAME }}:latest
+
+      - name: Check Docker image efficiency
+        uses: MaxymVlasov/dive-action@43dafd0015826beaca5110157c9262c5dc10672a # v1.4.0
+        with:
+          config-file: "${{ github.workspace }}/.dive.yaml"
+          github-token: ${{ github.token }}
+          image: "${{ vars.DOCKER_IMAGE_NAME }}:latest"
+
+      - name: Publish Docker image
+        if: github.ref == 'refs/heads/main'
+        uses: docker/build-push-action@v6
+        env:
+          DOCKER_BUILD_RECORD_UPLOAD: false
+        with:
+          file: ./Dockerfile
+          load: false
+          push: true
+          platforms: linux/amd64,linux/arm64/v8
+          tags: |
+            ${{ vars.DOCKER_IMAGE_NAME }}:latest

@@ -1,0 +1,19 @@
+# Python
+/.tox/
+*.pyc
+*.pyo
+__pycache__/
+.mypy_cache/
+/.coverage
+/coverage.xml
+/htmlcov/
+/.venv/
+
+# IDEs and editors
+/.idea/
+/.vscode/
+*.code-workspace
+*.sublime-workspace
+
+# build artifacts
+/build/

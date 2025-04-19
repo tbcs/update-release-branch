@@ -1,0 +1,83 @@
+# ==============================================================================
+# ⚠️ SECURITY WARNING: The pre-commit framework does not validate the code it
+# downloads and runs, it provides no protection against importing malicious
+# code.  It is *your* responsibility to ensure that every hook configured here
+# comes from a trustworthy source.
+#
+# When using hooks from untrusted or third-party repositories, always pin the
+# version using a commit hash, not a tag.  Git tags can be changed to point to a
+# different commit, which introduces supply chain risks.  Commit hashes are
+# immutable and don't carry the same risks.
+#
+# ❌ Avoid this (can be changed by repo owner):
+#   - repo: https://github.com/untrusted/repository
+#     rev: v1.0
+#
+# ✅ Prefer this (points to a fixed commit):
+#   - repo: https://github.com/untrusted/repository
+#     rev: da39a3ee5e6b4b0d3255bfef95601890afd80709
+# ==============================================================================
+
+minimum_pre_commit_version: 3.2.0
+default_install_hook_types:
+  - pre-commit
+  - pre-push
+  - commit-msg
+  - prepare-commit-msg
+default_stages:
+  - pre-commit
+  - pre-push
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: "cef0300fd0fc4d2a87a85fa2093c6b283ea36f4b" # frozen: v5.0.0
+    hooks:
+      - id: check-symlinks
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: mixed-line-ending
+        args: [--fix=lf]
+      - id: check-merge-conflict
+      - id: check-executables-have-shebangs
+  - repo: local
+    hooks:
+      - id: pygrep
+        name: Prevent accidental pushes with X​X​X markers
+        language: pygrep
+        entry: '\bXXX\b'
+        stages: [pre-push]
+  - repo: https://github.com/rbubley/mirrors-prettier
+    rev: "787fb9f542b140ba0b2aced38e6a3e68021647a3" # frozen: v3.5.3
+    hooks:
+      - id: prettier
+        name: Check/fix Markdown style (prettier)
+        types: [markdown]
+        files: ""
+        args: [--prose-wrap=always]
+  - repo: https://github.com/rbubley/mirrors-prettier
+    rev: "787fb9f542b140ba0b2aced38e6a3e68021647a3" # frozen: v3.5.3
+    hooks:
+      - id: prettier
+        name: Check/fix JSON style (prettier)
+        types: [json]
+        files: ""
+  - repo: https://github.com/rbubley/mirrors-prettier
+    rev: "787fb9f542b140ba0b2aced38e6a3e68021647a3" # frozen: v3.5.3
+    hooks:
+      - id: prettier
+        name: Check/fix YAML style (prettier)
+        types: [yaml]
+        files: ""
+  - repo: local
+    hooks:
+      - id: style-toml
+        name: Check/fix TOML style (taplo)
+        types: [toml]
+        files: ""
+        language: python
+        entry: taplo format
+        additional_dependencies: ["taplo==0.9.3"]
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: "d119aaff6891558b6eaf52518386871d1d267131" # frozen: v0.11.6
+    hooks:
+      - id: ruff-format
+        name: Check/fix Python style (ruff)

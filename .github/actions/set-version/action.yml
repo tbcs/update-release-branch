@@ -1,0 +1,36 @@
+name: Set the version for build artifacts
+description: >-
+  Sets the version for build artifacts based on input or commit SHA.
+
+inputs:
+  version:
+    description: The version of build artifacts
+    required: false
+
+outputs:
+  version:
+    description: The version of build artifacts
+    value: ${{ steps.set-version.outputs.version }}
+
+runs:
+  using: composite
+  steps:
+    - name: Set version
+      id: set-version
+      shell: bash
+      run: |
+        if [ -n "${{ inputs.version }}" ]; then
+          VERSION="${{ inputs.version }}"
+          echo "::notice::Version specified: '$VERSION'"
+        elif [ -n "${{ github.event.workflow_run.head_sha }}" ]; then
+          VERSION="${{ github.event.workflow_run.head_sha }}"
+          echo "::notice::Version derived from workflow_run event: '$VERSION'"
+        elif [ -n "${{ github.event.pull_request.head.sha }}" ]; then
+          VERSION="${{ github.event.pull_request.head.sha }}"
+          echo "::notice::Version derived from pull_request event: '$VERSION'"
+        else
+          commit_sha="$(echo ${{ github.sha }} | cut -c1-8)"
+          VERSION="$(date -u +%Y%m%d%H%M%S).${commit_sha}"
+          echo "::notice::Version derived from github.sha: '$VERSION'"
+        fi
+        echo "version=$VERSION" >> "$GITHUB_OUTPUT"

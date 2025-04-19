@@ -1,0 +1,24 @@
+name: Run checks
+description: >-
+  Runs validations and linters.
+
+runs:
+  using: "composite"
+  steps:
+    - name: Type check code with mypy
+      shell: bash
+      run: |
+        uv run mypy .
+
+    - name: Validate code with linters
+      shell: bash
+      run: |
+        uv run ruff check
+
+    - name: Lint Dockerfile with Checkov
+      uses: bridgecrewio/checkov-action@d6369fdf8a2897ebc8936a03ea82f61d6b28a166 # v12.2996.0 / 3.2.406
+      with:
+        file: ./Dockerfile
+        quiet: true
+        output_format: cli
+        output_file_path: console

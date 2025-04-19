@@ -1,0 +1,31 @@
+# https://spec.editorconfig.org/
+
+# Important: Use EditorConfig for general guidance, but always rely on the git
+# hooks for final code style validation.
+#
+# This configuration serves as a basic style guide, not a complete rulebook. The
+# authoritative source of code formatting standards lies in the code formatters
+# integrated via git hooks.  EditorConfig's capabilities are limited; it cannot
+# perfectly mirror the complex rules of a modern code formatter.  While it helps
+# keep your editor's formatting reasonably close to the desired style, it's no
+# guarantee that your code will pass the git pre-commit checks.
+
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+trim_trailing_whitespace = true
+insert_final_newline = true
+indent_style = space
+indent_size = 2
+tab_width = 2
+max_line_length = 100
+
+[*.py]
+max_line_length = 80
+indent_size = 4
+tab_width = 4
+
+[*.md]
+max_line_length = 80

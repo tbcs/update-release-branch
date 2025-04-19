@@ -1,0 +1,13 @@
+
+# ======================================================================
+# How to write a commit message:
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# - separate subject (first line) from body with a blank line
+# - summarize your change in the subject
+# - keep the subject concise, try to use no more than 80 characters
+# - start the subject with a lowercase verb, end it without a period
+# - use the imperative mood in the subject, i.e. write "add …" instead
+#   of "added …" or "adding …"
+# - the subject line should complete the following sentence:
+#   "If applied, this commit will …"
+# ======================================================================

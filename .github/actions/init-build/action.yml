@@ -1,0 +1,21 @@
+name: Initialize build environment
+description: >-
+  Prepares a Python build environment with `uv`.
+
+runs:
+  using: composite
+  steps:
+    - name: Install uv
+      uses: astral-sh/setup-uv@v5
+      with:
+        version: "0.6.12"
+
+    - name: Setup Python environment
+      uses: actions/setup-python@v5
+      with:
+        python-version-file: "pyproject.toml"
+
+    - name: Install Python dependencies
+      shell: bash
+      run: |
+        uv sync --locked

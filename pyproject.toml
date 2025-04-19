@@ -1,0 +1,54 @@
+[project]
+name = "update-release-branch"
+version = "0"
+requires-python = "==3.12.*"
+dependencies = ["click>=8.1.8", "gitpython>=3.1.44"]
+
+[dependency-groups]
+dev = ["mypy>=1.15.0", "ruff>=0.11.6"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 80
+
+[tool.ruff.lint]
+select = [
+  "ARG",
+  "ASYNC",
+  "B",
+  "C4",
+  "C90",
+  "D",
+  "DOC",
+  "DTZ",
+  "E",
+  "EM",
+  "ERA",
+  "F",
+  "FA",
+  "G",
+  "I",
+  "ISC",
+  "LOG",
+  "N",
+  "PIE",
+  "PL",
+  "PTH",
+  "RET",
+  "RUF",
+  "SIM",
+  "SLOT",
+  "TRY",
+  "UP",
+  "W",
+]
+preview = true
+explicit-preview-rules = true
+extend-select = ["DOC201", "DOC202", "DOC402", "DOC403", "DOC501", "DOC502"]
+ignore = ["D100", "D101", "D103", "LOG015", "RET504", "TRY003"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.mypy]
+strict = true
