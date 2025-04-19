@@ -121,7 +121,7 @@ jobs:
           git add versions.txt
 
       - name: Update release branch
-        uses: tbcs/update-release-branch@v1
+        uses: tbcs/update-release-branch@main
         with:
           version: "${{ env.VERSION }}"
           release-branch: "release"
