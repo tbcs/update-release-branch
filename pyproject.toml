@@ -1,7 +1,7 @@
 [project]
 name = "update-release-branch"
 version = "0"
-requires-python = "==3.12.*"
+requires-python = "==3.13.*"
 dependencies = ["click>=8.1.8", "gitpython>=3.1.44"]
 
 [dependency-groups]
