@@ -16,7 +16,7 @@ runs:
         uv run ruff check
 
     - name: Lint Dockerfile with Checkov
-      uses: bridgecrewio/checkov-action@d6369fdf8a2897ebc8936a03ea82f61d6b28a166 # v12.2996.0 / 3.2.406
+      uses: bridgecrewio/checkov-action@eec884fd62682f5f2b33e303e160d5e2fe8d89ec # v12.3052.0 / 3.2.406
       with:
         file: ./Dockerfile
         quiet: true
