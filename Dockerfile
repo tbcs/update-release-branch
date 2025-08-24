@@ -6,7 +6,7 @@
 # intermediate images
 # ==============================================================================
 
-FROM library/alpine:3.21 AS builder
+FROM library/alpine:3.22 AS builder
 
 ENV LANG=C
 
@@ -26,7 +26,7 @@ COPY update-release-branch.py /cmd/.venv/bin/update-release-branch
 # final image
 # ==============================================================================
 
-FROM library/alpine:3.21
+FROM library/alpine:3.22
 
 RUN apk --no-cache add python3 py3-pip git yq
 
