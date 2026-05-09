@@ -13,7 +13,7 @@ ENV LANG=C
 # install Python
 ENV PIP_ROOT_USER_ACTION=ignore
 RUN apk add python3 py3-pip git && \
-    pip install --break-system-packages uv==0.6.12
+    pip install --break-system-packages uv==0.11.12
 
 RUN mkdir /cmd/
 COPY pyproject.toml uv.lock /cmd/
