@@ -33,7 +33,7 @@ default_stages:
   - pre-push
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: "cef0300fd0fc4d2a87a85fa2093c6b283ea36f4b" # frozen: v5.0.0
+    rev: "3e8a8703264a2f4a69428a0aa4dcb512790b2c8c" # frozen: v6.0.0
     hooks:
       - id: check-symlinks
       - id: end-of-file-fixer
@@ -50,7 +50,7 @@ repos:
         entry: '\bXXX\b'
         stages: [pre-push]
   - repo: https://github.com/rbubley/mirrors-prettier
-    rev: "787fb9f542b140ba0b2aced38e6a3e68021647a3" # frozen: v3.5.3
+    rev: "515f543f5718ebfd6ce22e16708bb32c68ff96e1" # frozen: v3.8.3
     hooks:
       - id: prettier
         name: Check/fix Markdown style (prettier)
@@ -58,14 +58,14 @@ repos:
         files: ""
         args: [--prose-wrap=always]
   - repo: https://github.com/rbubley/mirrors-prettier
-    rev: "787fb9f542b140ba0b2aced38e6a3e68021647a3" # frozen: v3.5.3
+    rev: "515f543f5718ebfd6ce22e16708bb32c68ff96e1" # frozen: v3.8.3
     hooks:
       - id: prettier
         name: Check/fix JSON style (prettier)
         types: [json]
         files: ""
   - repo: https://github.com/rbubley/mirrors-prettier
-    rev: "787fb9f542b140ba0b2aced38e6a3e68021647a3" # frozen: v3.5.3
+    rev: "515f543f5718ebfd6ce22e16708bb32c68ff96e1" # frozen: v3.8.3
     hooks:
       - id: prettier
         name: Check/fix YAML style (prettier)
@@ -81,7 +81,7 @@ repos:
         entry: taplo format
         additional_dependencies: ["taplo==0.9.3"]
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: "d119aaff6891558b6eaf52518386871d1d267131" # frozen: v0.11.6
+    rev: "6fec9b7edb08fd9989088709d864a7826dc74e80" # frozen: v0.15.12
     hooks:
       - id: ruff-format
         name: Check/fix Python style (ruff)
