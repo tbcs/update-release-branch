@@ -18,4 +18,4 @@ runs:
     - name: Install Python dependencies
       shell: bash
       run: |
-        uv sync --locked
+        uv sync --locked --all-groups
