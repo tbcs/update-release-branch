@@ -32,12 +32,12 @@ runs:
   steps:
     # https://docs.astral.sh/uv/guides/integration/github/
     - name: Install uv
-      uses: astral-sh/setup-uv@v5
+      uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # v8.1.0
       with:
         version: "0.11.12"
 
     - name: Setup Python environment
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version-file: "pyproject.toml"
 
