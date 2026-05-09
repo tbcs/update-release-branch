@@ -415,7 +415,7 @@ def configure_logging(debug: bool) -> None:
 def check_git_version(minimum_version: tuple[int, int]) -> None:
     git_version_output = str(git.Git().execute(["git", "--version"]))
     version_string = git_version_output.strip().split()[-1]
-    (major, minor, *rest) = map(int, version_string.split("."))
+    (major, minor, *_rest) = map(int, version_string.split("."))
 
     if (major, minor) < minimum_version:
         msg = (
