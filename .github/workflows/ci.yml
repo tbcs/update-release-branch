@@ -46,7 +46,7 @@ jobs:
             ${{ vars.DOCKER_IMAGE_NAME }}:latest
 
       - name: Check Docker image efficiency
-        uses: MaxymVlasov/dive-action@726042660e3c8f7263350e14b202cc35d671db20 # v2.0.0
+        uses: MaxymVlasov/dive-action@9bfaea6c0b1e49111459b2cb3f9275fa4094a63e # v2.0.1
         with:
           config-file: "${{ github.workspace }}/.dive.yaml"
           github-token: ${{ github.token }}
